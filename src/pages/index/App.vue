@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Vue logo" src="@/assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
    <v-card class="my-3 mx-auto text-left" width="400" prepend-icon="mdi-home">
     <template v-slot:title>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'App',
