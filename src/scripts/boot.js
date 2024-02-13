@@ -6,7 +6,8 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import '@mdi/font/css/materialdesignicons.css' ;
+import '@/assets/styles/common.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 // 全エントリポイント共通の処理 (Vueコンポーネント，出力先のHTML要素)
 export default (component, element = "#app") => {
@@ -14,6 +15,9 @@ export default (component, element = "#app") => {
 	const vuetify = createVuetify({
 		components,
 		directives,
+		theme: {
+			defaultTheme: 'light'
+		},
 		icons: {
 			iconfont: 'mdi',
 		}

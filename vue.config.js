@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
 	transpileDependencies: true,
-	publicPath: "/",
+	publicPath: "/vue-practice-npm/",
 	pages: {
 		index: {
 			entry: 'src/pages/index/main.js',
