@@ -14,6 +14,11 @@
 				default: "",
 				required: false
 			},
+			icon: { // アイコン
+				type: String,
+				default: "",
+				required: false
+			},
 			headerLevel: { // タイトルに使用するHタグのレベル(0=Hタグ不使用)
 				type: Number,
 				default: 1,
@@ -33,7 +38,7 @@
 	<div class="ta-canvas rounded bg-background elevation-2 px-6 py-3">
 		<div class="pt-1 pb-2" v-if="title != ''">
 			<TACanvasCaption :caption="caption" v-if="caption != ''" />
-			<TACanvasTitle :title="title" :headerLevel="headerLevel" />
+			<TACanvasTitle :title="title" :icon="icon" :headerLevel="headerLevel" />
 		</div>
 		<slot></slot>
 	</div>

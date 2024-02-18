@@ -7,6 +7,11 @@
 				default: "",
 				required: false
 			},
+			icon: { // アイコン
+				type: String,
+				default: "",
+				required: false
+			},
 			headerLevel: { // 使用するHタグのレベル(0=Hタグ不使用)
 				type: Number,
 				default: 1,
@@ -18,7 +23,8 @@
 </script>
 
 <template>
-	<div class="ta-canvas-title">
+	<div class="ta-canvas-title d-flex">
+		<v-icon v-if="icon != ''" :icon="icon" class="me-3" color="primary" />
 		<p class="font-weight-bold" v-if="headerLevel == 0">{{ title }}</p>
 		<h1 v-if="headerLevel == 1">{{ title }}</h1>
 		<h2 v-if="headerLevel == 2">{{ title }}</h2>
@@ -32,6 +38,11 @@
 <style>
 	.ta-canvas-title {
 		border-bottom: 2px solid rgb(var(--v-theme-primary));
+	}
+
+	.ta-canvas-title > .v-icon {
+		align-self: center;
+		font-size: 3em;
 	}
 
 	.ta-canvas-title > h1,.ta-canvas-title > h2,.ta-canvas-title > h3,.ta-canvas-title > h4,.ta-canvas-title > h5,.ta-canvas-title > h6, .ta-canvas-title > p {
