@@ -53,7 +53,7 @@
 					<v-divider class="mb-2" v-if="index > 0" />
 					<v-list-subheader v-if="item != ''">{{ item }}</v-list-subheader>
 				</template>
-				<TANavigationItem v-else v-bind="item"  @click.stop="value = always" class="rounded mx-2 my-2"/>
+				<TANavigationItem v-else v-bind="item"  @click.stop="value = always" class="rounded ma-2"/>
 			</template>
 		</v-list>
 	</v-navigation-drawer>

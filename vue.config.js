@@ -7,7 +7,7 @@ module.exports = defineConfig({
 			entry: 'src/pages/index/main.js',
 			template: 'public/index.html',
 			filename: 'index.html',
-			title: 't-asa2000 apps'
+			title: 't-asa2000 Tools'
 		}
 	}
 });

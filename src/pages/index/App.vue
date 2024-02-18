@@ -69,6 +69,20 @@ export default {
 				href: "https://fedibird.com/@asata",
 				newTab: true
 			}
+		],
+		buttons: [
+			{
+				title: 'GitHub リポジトリ',
+				icon: 'mdi-xml',
+				href: "https://github.com/t-asa2000/vue-practice-npm",
+				newTab: true
+			},
+			{
+				title: '個人サイト',
+				icon: 'mdi-account-circle',
+				href: "https://t-asa2000.net/",
+				newTab: true
+			}
 		]
 	}),
 	methods: {
@@ -80,7 +94,7 @@ export default {
 </script>
 
 <template>
-	<TAPageBase title="t-asa2000 Tools" :menu="menu">
+	<TAPageBase title="t-asa2000 Tools" :menu="menu" :buttons="buttons">
 		<h1 class="px-2 py-3">このサイトについて</h1>
 		<TACanvas class="mb-3">
 			<p>個人的に「あったらいいな」と思ったツールを自作して公開しているサイトです。</p>
@@ -88,14 +102,13 @@ export default {
 		<h1 class="px-2 py-3">今後実装予定</h1>
 		<TACanvas title="デ漢字" caption="あの漢字の書き順なんだっけ？" headerLevel=2 class="mb-3">
 			<p>数文字の単語を入力すると、その単語を大きい文字サイズに拡大して表示します。</p>
-			<p>漢字の書き順や細かい部分の確認にお使いください。</p>
 			<div class="d-flex justify-center justify-sm-start my-2">
 				<v-btn variant="plain" style="pointer-events:none;" color="primary">ただいま準備中</v-btn>
 			</div>
 		</TACanvas>
 		<TACanvas title="貨幣・汎用カウンター" caption="数を数えて合計金額を表示" headerLevel=2 class="mb-3">
 			<p>1円玉から万札までの貨幣別のカウンターと、その合計金額を表示します。データはブラウザ内に保存されるため、ブラウザを閉じても再度続きからカウントすることができます。</p>
-			<p>また、その応用としてそれぞれのカウンターに重み(かける数)を指定してその合計を表示する「汎用カウンター」も実装します。</p>
+			<p>また、それぞれのカウンターに重み(かける数)を指定してその合計を表示する「汎用カウンター」もあります。ゲームの点数計算をする時などに便利です。</p>
 			<div class="d-flex flex-column flex-sm-row justify-center justify-sm-start ga-3 my-2">
 				<v-btn variant="plain" style="pointer-events:none;" color="primary">ただいま準備中</v-btn>
 			</div>
