@@ -7,14 +7,9 @@
 			TAButton
 		},
 		props: {
-			defaultValues: { // 既定の属性値
-				type: Object,
-				default: () => { return {} }, 
-				required: false
-			},
-			buttons: { // ボタン(連想配列，ボタン名をキーとしてTAButtonのPropsを入れる)
-				type: Object,
-				default: () => { return {} },
+			buttons: { // ボタン(配列，TAButtonのPropsを入れる)
+				type: Array,
+				default: () => { return [] },
 				required: false
 			},
 			vertical: { // 縦に並べるかどうか
@@ -43,25 +38,13 @@
 					"flex-sm-row" : !this.vertical && this.responsive
 				}
 			}
-		},
-		methods: {
-			merge(button) {
-				const findKey = (key) => Object.keys(button).includes(key);
-
-				// 存在しない属性値をdefaultValuesからコピー
-				Object.keys(this.defaultValues).forEach((key) => {
-					if (!findKey(key)) button[key] = this.defaultValues[key];
-				});
-
-				return button;
-			}
 		}
 	}
 </script>
 
 <template>
 	<div :class="classes" >
-		<TAButton v-for="(button, key) in buttons" v-bind:key="key" v-bind="merge(button)" @click="$emit('buttonClicked', key)" />
+		<TAButton v-for="(button, index) in buttons" v-bind:key="index" v-bind="button" @click="$emit('buttonClicked', index)" />
 		<slot></slot>
 	</div>
 </template>

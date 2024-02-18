@@ -30,8 +30,8 @@
 </script>
 
 <template>
-	<div class="ta-canvas rounded bg-background elevation-2 px-6 pt-4 pb-3">
-		<div class="mb-2" v-if="title != ''">
+	<div class="ta-canvas rounded bg-background elevation-2 px-6 py-3">
+		<div class="pt-1 pb-2" v-if="title != ''">
 			<TACanvasCaption :caption="caption" v-if="caption != ''" />
 			<TACanvasTitle :title="title" :headerLevel="headerLevel" />
 		</div>

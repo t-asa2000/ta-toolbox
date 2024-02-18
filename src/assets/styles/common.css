@@ -1,13 +1,19 @@
 /* Web fonts */
-@import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=BIZ+UDMincho:wght@400;700&family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDPMincho:wght@400;700&family=Noto+Sans+JP:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
 
 /* Body */
 body
 {
 	word-break: break-word;
-	font-family: "Noto Sans JP","BIZ UDPGothic",Avenir, Helvetica, Arial, sans-serif;
+	font-family: "Roboto","Noto Sans JP",Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Spacing */
+h1,h2,h3,h4,h5,h6,p,ul,ol {
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
 }
 
 /* Header Text */
@@ -33,15 +39,27 @@ h6 {
 	font-size: 1.05em;
 }
 
+/* List */
+ul, ol {
+	list-style-position: inside;
+	padding-left: 0.2rem;
+}
+
+/* HR */
+hr:not(.v-divider) {
+	margin: 0.5em auto;
+	width: min(20%, 280px);
+}
+
 /* Codes */
 code, kbd, pre, samp {
 	background-color: rgb(var(--v-theme-surface-light));
 	padding: 0.2em;
 	border-radius: 0.2em;
-	font-family: "BIZ UDGothic", monospace;
+	font-family: "Consolas",monospace;
 }
 
-/* Vuetify Components */
-.v-button {
-	font-weight: bold;
+/* Button */
+.v-btn {
+	min-height: 3em;
 }

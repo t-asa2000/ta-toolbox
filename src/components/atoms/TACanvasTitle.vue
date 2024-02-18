@@ -18,21 +18,24 @@
 </script>
 
 <template>
-	<div class="ta-canvas-title font-weight-bold" v-if="headerLevel == 0">{{ title }}</div>
-	<h1 class="ta-canvas-title" v-if="headerLevel == 1">{{ title }}</h1>
-	<h2 class="ta-canvas-title" v-if="headerLevel == 2">{{ title }}</h2>
-	<h3 class="ta-canvas-title" v-if="headerLevel == 3">{{ title }}</h3>
-	<h4 class="ta-canvas-title" v-if="headerLevel == 4">{{ title }}</h4>
-	<h5 class="ta-canvas-title" v-if="headerLevel == 5">{{ title }}</h5>
-	<h6 class="ta-canvas-title" v-if="headerLevel == 6">{{ title }}</h6>
+	<div class="ta-canvas-title">
+		<p class="font-weight-bold" v-if="headerLevel == 0">{{ title }}</p>
+		<h1 v-if="headerLevel == 1">{{ title }}</h1>
+		<h2 v-if="headerLevel == 2">{{ title }}</h2>
+		<h3 v-if="headerLevel == 3">{{ title }}</h3>
+		<h4 v-if="headerLevel == 4">{{ title }}</h4>
+		<h5 v-if="headerLevel == 5">{{ title }}</h5>
+		<h6 v-if="headerLevel == 6">{{ title }}</h6>
+	</div>
 </template>
 
 <style>
 	.ta-canvas-title {
-		padding-top: 0.2rem;
-		padding-bottom: 0.2rem;
-		font-size: 1.7em;
 		border-bottom: 2px solid rgb(var(--v-theme-primary));
+	}
+
+	.ta-canvas-title > h1,.ta-canvas-title > h2,.ta-canvas-title > h3,.ta-canvas-title > h4,.ta-canvas-title > h5,.ta-canvas-title > h6, .ta-canvas-title > p {
+		font-size: 1.7em;
 	}
 </style>
 
