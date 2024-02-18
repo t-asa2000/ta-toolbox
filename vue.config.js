@@ -3,8 +3,8 @@ module.exports = defineConfig({
 	transpileDependencies: true,
 	publicPath: "/vue-practice-npm/",
 	pages: {
-		index: {
-			entry: 'src/pages/index/main.js',
+		home: {
+			entry: 'src/pages/home/main.js',
 			template: 'public/index.html',
 			filename: 'index.html',
 			title: 'TA道具箱'
