@@ -1,4 +1,4 @@
-# vue-practice-npm
+# ta-toolbox
 
 ## Project setup
 ```
@@ -13,6 +13,11 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
+```
+
+### Deploys to GitHub Pages (`gh-pages` branch)
+```
+npm run deploy
 ```
 
 ### Lints and fixes files

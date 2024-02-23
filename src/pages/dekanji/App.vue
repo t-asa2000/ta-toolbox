@@ -42,7 +42,7 @@ export default {
 			{
 				title: 'GitHub リポジトリ',
 				icon: 'mdi-xml',
-				href: "https://github.com/t-asa2000/vue-practice-npm",
+				href: "https://github.com/t-asa2000/ta-toolbox",
 				newTab: true
 			},
 			'開発者 (t-asa2000)',
