@@ -14,6 +14,12 @@ module.exports = defineConfig({
 			template: 'public/index.html',
 			filename: 'dekanji/index.html',
 			title: 'デ漢字'
+		},
+		'mastodon-misskey': {
+			entry: 'src/pages/mastodon-misskey/main.js',
+			template: 'public/index.html',
+			filename: 'mastodon-misskey/index.html',
+			title: 'Mastodon/Misskey 投稿埋め込みウィジェット'
 		}
 	}
 });
