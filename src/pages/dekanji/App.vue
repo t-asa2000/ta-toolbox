@@ -33,10 +33,3 @@ export default {
 		</TACanvas>
 	</TAPageBase>
 </template>
-
-<style>
-.v-text-field.dekanji input {
-	font-size: 80px !important;
-}
-
-</style>
