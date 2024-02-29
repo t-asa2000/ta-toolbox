@@ -2,6 +2,7 @@
 import TACanvas from '@/components/molecuels/TACanvas.vue';
 import TAPageBase from '@/components/templates/TAPageBase.vue';
 import DekanjiForm from '@/components/organisms/DekanjiForm.vue';
+import mainMenu from '@/scripts/mainMenu';
 
 export default {
 	name: 'App',
@@ -12,72 +13,7 @@ export default {
 	},
 	data:() => ({
 		title: 'デ漢字',
-		menu: [
-			'TA道具箱',
-			{
-				title: 'ホーム',
-				icon: 'mdi-home',
-				href: '../'
-			},
-			'ツール一覧',
-			{
-				title: 'デ漢字',
-				icon: 'mdi-ideogram-cjk',
-				href: './',
-				active: true
-			},
-			{
-				title: '貨幣カウンター 汎用カウンター',
-				icon: 'mdi-counter'
-			},
-			{
-				title: 'URL一括修正ツール',
-				icon: 'mdi-xml'
-			},
-			{
-				title: 'Mastodon/Misskey 投稿埋め込み ウィジェット',
-				icon: 'mdi-account-multiple'
-			},
-			'ソースコード',
-			{
-				title: 'GitHub リポジトリ',
-				icon: 'mdi-xml',
-				href: "https://github.com/t-asa2000/ta-toolbox",
-				newTab: true
-			},
-			'開発者 (t-asa2000)',
-			{
-				title: '個人サイト',
-				icon: 'mdi-account-circle',
-				href: "https://t-asa2000.net/",
-				newTab: true
-			},
-			{
-				title: 'GitHub',
-				icon: 'mdi-link-variant',
-				href: "https://github.com/t-asa2000/",
-				newTab: true
-			},
-			{
-				title: 'Misskey',
-				icon: 'mdi-link-variant',
-				href: "https://misskey.io/@asata",
-				newTab: true
-			},
-			{
-				title: 'Fedibird (Mastodon)',
-				icon: 'mdi-link-variant',
-				href: "https://fedibird.com/@asata",
-				newTab: true
-			}
-		],
-		buttons: [
-			{
-				title: 'ホーム',
-				icon: 'mdi-home',
-				href: '../'
-			}
-		],
+		menu: mainMenu('/dekanji/'),
 		word: ''
 	}),
 	methods: {
@@ -89,7 +25,7 @@ export default {
 </script>
 
 <template>
-	<TAPageBase :title="title" :menu="menu" :buttons="buttons">
+	<TAPageBase :title="title" :menu="menu">
 		<DekanjiForm class="my-3" />
 		<TACanvas title="更新履歴" icon="mdi-history" headerLevel=2 class="mb-3">
 			<p><b class="pe-6">2024.2.19</b>フォントと文字サイズの変更に対応しました。設定値はブラウザに保存され、次回以降も引き継がれます。<br>当サイトはGoogle Fontsから「Noto Sans JP」「BIZ UD/UDP明朝」「BIZ UD/UDPゴシック」の5種類のフォントを使用しています。</p>
