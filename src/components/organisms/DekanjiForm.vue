@@ -3,6 +3,7 @@
 	import DekanjiResult from '../atoms/DekanjiResult.vue';
 
 	const defaultSize = 256;
+	const sizeStep = 16;
 	const defaultFonts = ['BIZ UDMincho','BIZ UDGothic','BIZ UDPMincho','BIZ UDPGothic','Noto Sans JP'];
 
 	export default {
@@ -49,17 +50,16 @@
 			reset() { // 設定を既定値にリセット
 				this.size = defaultSize;
 				this.font = defaultFonts[0];
-				
 				this.save();
 			},
 			sizeDown() { // フォントサイズを下げる
-				const size = Math.floor(this.size - 16);
-				this.size = size > 16 ? size : 16;
+				const size = this.size - sizeStep;
+				this.size = size > sizeStep ? size : sizeStep;
 				this.save();
 			},
 			sizeUp() { // フォントサイズを上げる
-				const size = Math.floor(this.size + 16);
-				this.size = size > 16 ? size : 16;
+				const size = this.size + sizeStep;
+				this.size = size > sizeStep ? size : sizeStep;
 				this.save();
 			},
 		}
