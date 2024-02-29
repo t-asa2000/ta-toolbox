@@ -12,6 +12,11 @@
 				default: '',
 				required: false
 			},
+			navIcon: {
+				type: Boolean,
+				default: true,
+				required: false
+			},
 			buttons: {
 				type: Array,
 				default: () => { return [] },
@@ -23,7 +28,7 @@
 
 <template>
 	<v-app-bar class="ta-app-bar" color="primary">
-		<v-app-bar-nav-icon class="d-lg-none mt-1" variant="text" @click.stop="$emit('navIconClick')" />
+		<v-app-bar-nav-icon v-if="navIcon" class="d-lg-none mt-1" variant="text" @click.stop="$emit('navIconClick')" />
 		<v-toolbar-title class="pe-2">{{ title }}</v-toolbar-title>
 		<v-spacer class="d-none d-sm-block" />
 		<TAAppBarButton v-for="(button, index) in buttons" :key="index" v-bind="button" class="mt-1" />

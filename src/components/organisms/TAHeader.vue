@@ -34,14 +34,14 @@
 <template>
 	<div class="ta-header">
 		<!-- アプリバー -->
-		<TAAppBar :title="title" :buttons="buttons" @navIconClick="drawer = !drawer" />
+		<TAAppBar :navIcon="menu.length > 0" :title="title" :buttons="buttons" @navIconClick="drawer = !drawer" />
 
 		<!-- ナビゲーションドロワー -->
 		<!-- 1280px以上で常時表示 -->
-		<TANavigation :items="menu" class="d-none d-lg-flex" always />
+		<TANavigation v-if="menu.length > 0" :items="menu" class="d-none d-lg-flex" always />
 
 		<!-- 1280px未満の場合は左上のアイコンで切り替え -->
-		<TANavigation v-model="drawer" :items="menu" class="d-lg-none" />
+		<TANavigation v-if="menu.length > 0" v-model="drawer" :items="menu" class="d-lg-none" />
 	</div>
 </template>
 
