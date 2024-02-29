@@ -3,7 +3,7 @@
 	import DekanjiResult from '../atoms/DekanjiResult.vue';
 
 	const defaultSize = 256;
-	const defaultFonts = ['Noto Sans JP','BIZ UDGothic', 'BIZ UDPGothic','BIZ UDMincho','BIZ UDPMincho'];
+	const defaultFonts = ['BIZ UDMincho','BIZ UDGothic','BIZ UDPMincho','BIZ UDPGothic','Noto Sans JP'];
 
 	export default {
 		name: 'DekanjiForm',

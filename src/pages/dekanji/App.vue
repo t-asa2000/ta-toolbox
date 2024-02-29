@@ -28,6 +28,7 @@ export default {
 	<TAPageBase :title="title" :menu="menu">
 		<DekanjiForm class="my-3" />
 		<TACanvas title="更新履歴" icon="mdi-history" headerLevel=2 class="mb-3">
+			<p><b class="pe-6">2024.3.1</b>既定のフォントを「BIZ UD明朝」に変更しました。</p>
 			<p><b class="pe-6">2024.2.19</b>フォントと文字サイズの変更に対応しました。設定値はブラウザに保存され、次回以降も引き継がれます。<br>当サイトはGoogle Fontsから「Noto Sans JP」「BIZ UD/UDP明朝」「BIZ UD/UDPゴシック」の5種類のフォントを使用しています。</p>
 			<p><b class="pe-6">2024.2.19</b>初版公開</p>
 		</TACanvas>
