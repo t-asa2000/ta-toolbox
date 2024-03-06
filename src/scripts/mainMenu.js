@@ -1,39 +1,27 @@
-// メインメニューの生成(現在のパス，ルートディレクトリのパス)
-export default function mainMenu(current, publicPath = '/') {
+// メインメニューの生成(現在のパス)
+export default function mainMenu(current) {
+	const root = process.env.BASE_URL;
+	const version = process.env.VUE_APP_VERSION;
+
 	// メニュー項目
 	const menu = [
 		'TA道具箱',
 		{
 			title: 'ホーム',
 			icon: 'mdi-home',
-			href: publicPath
+			href: root
 		},
 		'ツール一覧',
 		{
 			title: 'デ漢字',
 			icon: 'mdi-ideogram-cjk',
-			href: publicPath + 'dekanji/'
+			href: root + 'dekanji/'
 		},
-		/*{
-			title: '貨幣カウンター 汎用カウンター',
-			icon: 'mdi-counter',
-			href: publicPath + 'counter/'
-		},
-		{
-			title: 'URL一括修正ツール',
-			icon: 'mdi-xml',
-			href: publicPath + 'url/'
-		},
-		{
-			title: 'Mastodon/Misskey 投稿埋め込み ウィジェット',
-			icon: 'mdi-account-multiple',
-			href: publicPath + 'mastodon-misskey/'
-		},*/
 		'ソースコード',
 		{
 			title: 'GitHub リポジトリ',
 			icon: 'mdi-xml',
-			href: "https://github.com/t-asa2000/ta-toolbox",
+			href: process.env.VUE_APP_HP,
 			newTab: true
 		},
 		'開発者 (t-asa2000)',
@@ -60,7 +48,8 @@ export default function mainMenu(current, publicPath = '/') {
 			icon: 'mdi-link-variant',
 			href: "https://fedibird.com/@asata",
 			newTab: true
-		}
+		},
+		version // 末尾にアプリバージョンを表示
 	]
 
 	// 項目がアクティブかどうかを決める

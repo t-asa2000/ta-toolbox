@@ -1,6 +1,12 @@
 {
   "name": "ta-toolbox",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "author": "t-asa2000",
+  "homepage": "https://github.com/t-asa2000/ta-toolbox",
+  "repository": {
+    "type": "git",
+	"url": "git+ssh://git@github.com/t-asa2000/ta-toolbox.git"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

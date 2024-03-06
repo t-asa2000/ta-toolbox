@@ -1,3 +1,9 @@
+// 環境変数の設定
+const meta = require('./package.json');
+process.env.VUE_APP_VERSION = meta.version;
+process.env.VUE_APP_HP = meta.homepage;
+
+// Vueの設定
 const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
 	transpileDependencies: true,
