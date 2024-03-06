@@ -1,10 +1,10 @@
 <script>
 	import TACanvas from '../molecuels/TACanvas.vue';
 	import DekanjiResult from '../atoms/DekanjiResult.vue';
+	import Dekanji from '@/classes/Dekanji';
 
-	const defaultSize = 256;
-	const sizeStep = 16;
-	const defaultFonts = ['BIZ UDMincho','BIZ UDGothic','BIZ UDPMincho','BIZ UDPGothic','Noto Sans JP'];
+	// 「デ漢字」クラスのインスタンス
+	const dekanji = new Dekanji();
 
 	export default {
 		name: 'DekanjiForm',
@@ -14,53 +14,39 @@
 		},
 		data: () => ({
 			word: '', // 表示する漢字(熟語)
-			size: defaultSize, // 文字サイズ
-			font: defaultFonts[0], // フォント
-			fonts: defaultFonts,
-			fontChangeMode: false
+			fontChangeMode: false, // フォント変更欄の表示有無
+			defaultFonts: Dekanji.defaultFonts, // フォント変更欄の選択候補
+			storage: dekanji.update() // ローカルストレージに保存するデータ(文字サイズ，フォント)
 		}),
-		mounted() { // 読み込み時，localStorageから設定を復元する
-			if (localStorage.dekanji != undefined) {		
-				const obj = JSON.parse(localStorage.dekanji);
-
-				if (obj.size != undefined) this.size = obj.size;
-				if (obj.font != undefined) this.font = obj.font;
-			}
-		},
 		computed: {
-			_font: {
+			size() { // 文字サイズ
+				return this.storage.size;
+			},
+			font: { // フォント
 				get() {
-					return this.font;
+					return this.storage.font;
 				},
-				set(v) {
-					this.font = v;
-					this.save();
+				set(font) {
+					dekanji.font = font;
+					this.update();
 				}
 			}
 		},
 		methods: {
-			save() { // localStorageに設定を保存する
-				const obj = {
-					size: this.size,
-					font: this.font
-				};
-
-				localStorage.dekanji = JSON.stringify(obj);
+			update() { // ローカルストレージの更新
+				this.storage = dekanji.update();
 			},
 			reset() { // 設定を既定値にリセット
-				this.size = defaultSize;
-				this.font = defaultFonts[0];
-				this.save();
+				dekanji.reset();
+				this.update();
 			},
-			sizeDown() { // フォントサイズを下げる
-				const size = this.size - sizeStep;
-				this.size = size > sizeStep ? size : sizeStep;
-				this.save();
+			sizeDown() { // 文字サイズを下げる
+				dekanji.sizeDown();
+				this.update();
 			},
-			sizeUp() { // フォントサイズを上げる
-				const size = this.size + sizeStep;
-				this.size = size > sizeStep ? size : sizeStep;
-				this.save();
+			sizeUp() { // 文字サイズを上げる
+				dekanji.sizeUp();
+				this.update();
 			},
 		}
 	}
@@ -85,10 +71,10 @@
 			<v-btn variant="flat" color="primary" @click.stop="sizeUp()">文字＋</v-btn>
 		</div>
 		
-		<!-- フォント変更用のコンボボックス(ボタンを押すと表示/非表示) -->
-		<v-combobox label="フォントを選択" placeholder="プリセットまたはお使いのデバイスにインストールされているフォント名を入力" variant="outlined" :class="fontChangeMode ? ['pt-3'] : ['d-none']" :items="fonts" v-model="_font" clearable />
+		<!-- フォント変更欄 (コンボボックス, フォント変更ボタンを押すと表示/非表示) -->
+		<v-combobox v-if="fontChangeMode" label="フォントを選択" placeholder="プリセットまたはお使いのデバイスにインストールされているフォント名を入力" variant="outlined" class="pt-3" :items="defaultFonts" v-model="font" clearable />
 		
 		<!-- 拡大表示 -->
-		<DekanjiResult :word="word" :size="size" :font="_font" />
+		<DekanjiResult :word="word" :size="size" :font="font" />
 	</TACanvas>
 </template>
