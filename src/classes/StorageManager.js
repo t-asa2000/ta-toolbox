@@ -24,4 +24,35 @@ export default class StorageManager {
 			sessionStorage[this.name] = data;
 		}
 	}
+
+	// ローカルストレージのエクスポート
+	static exportLocal() {
+		const local = {
+			values: {}, // 文字列
+			objects: {} // JSON
+		}
+
+		for(key in localStorage) {
+			try {
+				local.objects[key] = JSON.parse(localStorage[key]);
+			} catch {
+				local.values[key] = localStorage[key];
+			}
+		}
+
+		return local;
+	}
+
+	// ローカルストレージのインポート
+	static importLocal(local) {
+		// 文字列のインポート
+		for (key in local.values) {
+			localStorage[key] = local.values[key];
+		}
+
+		// JSONのインポート
+		for (key in local.objects) {
+			localStorage[key] = JSON.stringify(local.objects[key]);
+		}
+	}
 }
