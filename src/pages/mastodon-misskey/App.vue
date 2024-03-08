@@ -72,14 +72,12 @@ export default {
 				newTab: true
 			}
 		],
-		pleaseWait: false,
 		urlInput: '',
 		uri: undefined
 	}),
 	methods: {
 		async preview() {
-			this.pleaseWait = true;
-			const post = await new SNSPost(this.urlInput).fetchPost();
+			const post = await new SNSPost(this.urlInput, false).fetchPost();
 			this.uri = post?.uri ?? this.urlInput;
 			this.urlInput = post?.uri ?? this.urlInput;
 		}
@@ -95,9 +93,8 @@ export default {
 				<v-btn variant="tonal" prepend-icon="mdi-eye-arrow-right" color="primary" @click.stop="preview()">プレビューを表示</v-btn>
 			</div>
 		</TACanvas>
-		<TACanvas title="プレビュー" icon="mdi-monitor" headerLevel=2 class="mb-3">
-			<v-alert v-if="pleaseWait" v-model="alert" border="start" variant="tonal" type="info" title="しばらくお待ちください" class="my-5" />
-			<SNSPostWidget class="mx-n5" :uri="uri" :key="uri" v-if="uri != undefined" @loadComplete="pleaseWait = false" />
+		<TACanvas title="プレビュー" icon="mdi-monitor" headerLevel=2 class="mb-3" v-if="uri != undefined"  :key="uri">
+			<SNSPostWidget class="mx-n5" :uri="uri" />
 		</TACanvas>
 		<TACanvas title="更新履歴" icon="mdi-history" headerLevel=2 class="mb-3">
 		</TACanvas>

@@ -5,18 +5,17 @@ const MISSKEY = 'misskey';
 
 // SNS投稿クラス(Mastodon/Misskey)
 export default class SNSPost {
-	// コンストラクター(URI, 無限ループ防止フラグ)
-	constructor(uri, repeated = false) {
+	// コンストラクター(URI, リダイレクト)
+	constructor(uri, redirect = true) {
 		// URIを文字列からSNSPostUri オブジェクトに変換
 		if (!(uri instanceof SNSPostUri)) uri = new SNSPostUri(uri);
 
-		this.uriObject = uri; // SNSPostUri オブジェクト
 		this.uri = uri.uri; // 投稿のURI
 		this.server = uri.server; // サーバーのドメイン
 		this.postId = uri.postId; // 投稿ID
 		this.service = uri.service; // SNSサービス名(Mastodon/Misskey)
 		this.htmlOutput = this.service == MASTODON; // HTML出力モード
-		this.repeated = repeated; // 無限ループ防止
+		this.redirect = redirect; // リダイレクト(リモート投稿の直接取得)
 
 		this.text = undefined; // 本文(HTMLもしくは1行ごとに分割された文字列の配列)
 		this.userName = undefined; // ユーザー名
@@ -55,11 +54,10 @@ export default class SNSPost {
 		// 投稿のデータが取得できなかった場合
 		if (this.text == undefined) return undefined;
 
-		// リモート投稿を参照している場合はそのサーバーから直接再取得する
-		// (再々取得が行われないように無限ループ防止フラグをtrueにする)
+		// リモート投稿を参照している場合はそのサーバーから直接再取得する(リダイレクト有効時)
 		const uri = new SNSPostUri(this.uri);
-		if (!this.repeated && uri.active && this.server != uri.server) {
-			return await new SNSPost(uri, true).fetchPost();
+		if (this.redirect && uri.active && this.server != uri.server) {
+			return await new SNSPost(uri, false).fetchPost();
 		}
 
 		return this;

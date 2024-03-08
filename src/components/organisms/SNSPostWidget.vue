@@ -11,14 +11,13 @@
 			}
 		},
 		data:() => ({
-			postData: undefined
+			postData: undefined,
+			pleaseWait: true
 		}),
 		async mounted() {
-			if (this.uri != undefined) {
-				const post = await new SNSPost(this.uri).fetchPost();
-				this.postData = post?.postData;
-				this.$emit('loadComplete');
-			}
+			const post = await new SNSPost(this.uri).fetchPost();
+			this.postData = post?.postData;
+			this.pleaseWait = false;
 		}
 	}
 </script>
@@ -56,7 +55,7 @@
 		</template>
 
 		<v-card-text style="line-height: 1.2" class="text-h5 py-2" v-else>
-			投稿を取得できません。
+			{{ pleaseWait ? 'しばらくお待ちください。' : '投稿を取得できません。' }}
 		</v-card-text>
 
 	</v-card>
