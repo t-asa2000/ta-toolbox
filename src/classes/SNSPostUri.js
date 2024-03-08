@@ -14,9 +14,9 @@ export default class SNSPostUri {
 	}
 
 	// 有効なURIかどうか
-	get active() {
+	/*get active() {
 		return this.server != undefined && this.postId != undefined && this.service != undefined;
-	}
+	}*/
 
 	// サービス名を取得
 	getServiceName() {

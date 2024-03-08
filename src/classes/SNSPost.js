@@ -55,8 +55,8 @@ export default class SNSPost {
 		if (this.text == undefined) return undefined;
 
 		// リモート投稿を参照している場合はそのサーバーから直接再取得する(リダイレクト有効時)
-		const uri = new SNSPostUri(this.uri);
-		if (this.redirect && uri.active && this.server != uri.server) {
+		const uri = this.redirect ? new SNSPostUri(this.uri) : undefined;
+		if (uri?.server != undefined && this.server != uri.server) {
 			return await new SNSPost(uri, false).fetchPost();
 		}
 
