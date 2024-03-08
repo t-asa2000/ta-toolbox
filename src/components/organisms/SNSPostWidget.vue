@@ -31,7 +31,9 @@
 						<v-avatar :image="postData.userImg" size="large" class="mt-1" />
 					</template>
 					
-					<v-list-item-title style="white-space:unset" class="font-weight-bold">{{ postData.userDisplayName }}</v-list-item-title>
+					<v-list-item-title style="white-space:unset" class="font-weight-bold" v-if="postData.htmlOutput" v-html="postData.userDisplayName" />
+
+					<v-list-item-title style="white-space:unset" class="font-weight-bold" v-else>{{ postData.userDisplayName }}</v-list-item-title>
 					
 					<v-list-item-subtitle style="white-space:unset;min-height: 1.2em;font-size: 0.7rem;">{{ postData.userName + '@' + postData.server }}</v-list-item-subtitle>
 					

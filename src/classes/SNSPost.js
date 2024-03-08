@@ -80,7 +80,7 @@ export default class SNSPost {
 		console.log(resp);
 
 		// 投稿の本文を取得 (MastodonのAPIはHTML形式で投稿の本文を返す)
-		this.text = resp?.content;
+		this.text = this.parseMastodonEmojis(resp?.content, resp?.emojis);
 
 		// 投稿の詳細を取得
 		this.postId = resp?.id ?? this.postId;
@@ -89,12 +89,38 @@ export default class SNSPost {
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.account?.username;
-		this.userDisplayName = resp?.account?.display_name;
+		this.userDisplayName = this.parseMastodonEmojis(resp?.account?.display_name, resp?.account?.emojis);
 		this.userImg = resp?.account?.avatar_static;
 
 		if (this.userName != undefined) {
 			this.userUri = 'https://' + this.server + '/@' + this.userName;
 		}
+	}
+
+	// imgタグの生成
+	createImg(text, src) {
+		const img = document.createElement('img');
+		img.alt = text;
+		img.src = src;
+		img.style.display = 'inline';
+		img.style.verticalAlign = 'sub';
+		img.style.maxHeight = '1em';
+		img.style.objectFit = 'contain';
+
+		return img;
+	}
+
+	// Mastodonの絵文字をパースする
+	parseMastodonEmojis(text, emojis) {
+		if (text == undefined || emojis == undefined) return text;
+
+		// 各絵文字に対応したHTMLソースコードへの置換
+		for(var i = 0; i < emojis.length ; i++) {
+			const html = this.createImg(':' + emojis[i].shortcode + ':', emojis[i].static_url).outerHTML;
+			text = text.split(':' + emojis[i].shortcode + ':').join(html);
+		}
+
+		return text;
 	}
 
 	// Misskeyの投稿を取得する
