@@ -1,8 +1,7 @@
 <script>
 import TACanvas from '@/components/molecuels/TACanvas.vue';
 import TAPageBase from '@/components/templates/TAPageBase.vue';
-import getPostData from '@/scripts/getPostData';
-import getPostInfo from '@/scripts/getPostInfo';
+import SNSPost from '@/classes/SNSPost';
 
 export default {
 	name: 'App',
@@ -72,12 +71,13 @@ export default {
 			}
 		],
 		post_url: '',
-		post: null
+		postData: undefined
 	}),
 	methods: {
 		async getPost() {
-			const info = getPostInfo(this.post_url);
-			this.post = info != null ? await getPostData(info.service , info.server, info.postId) : null;
+			const post = await new SNSPost(this.post_url).fetchPost();
+			this.postData = post?.postData;
+			this.post_url = post?.uri ?? this.post_url;
 		}
 	}
 }
@@ -90,17 +90,18 @@ export default {
 			<div class="d-flex flex-row ga-3 my-2">
 				<v-btn variant="tonal" color="primary" @click.stop="getPost()">ノートを取得</v-btn>
 			</div>
-			<template v-if="post != null">
-				<h2 v-if="post.user != null">{{ post.user + '@' + post.server }}</h2>
-				<p v-if="post.userImg != null">
-					<img :src="post.userImg" class="rounded" style="width: 250px;" />
+			<template v-if="postData != undefined">
+				<h2 v-if="postData.userDisplayName != undefined">{{ postData.userDisplayName }}</h2>
+				<p v-if="postData.userName != undefined">{{ postData.userName + '@' + postData.server }}</p>
+				<p v-if="postData.userImg != undefined">
+					<img :src="postData.userImg" class="rounded" style="width: 250px;" />
 				</p>
-				<p v-if="post.text.length > 0">
-					<template v-for="(line, index) in post.text" :key="index">
+				<div v-if="postData.htmlOutput" v-html="postData.text" />
+				<p v-else-if="postData.text.length > 0">
+					<template v-for="(line, index) in postData.text" :key="index">
 						{{ line }}<br>
 					</template>
 				</p>
-				<div v-else-if="post.rawHtml != null" v-html="post.rawHtml" />
 			</template>
 		</TACanvas>
 		<TACanvas title="更新履歴" icon="mdi-history" headerLevel=2 class="mb-3">
