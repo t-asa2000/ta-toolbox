@@ -1,13 +1,15 @@
 <script>
 import TACanvas from '@/components/molecuels/TACanvas.vue';
 import TAPageBase from '@/components/templates/TAPageBase.vue';
+import SNSPostWidget from '@/components/organisms/SNSPostWidget.vue';
 import SNSPost from '@/classes/SNSPost';
 
 export default {
 	name: 'App',
 	components: {
 		TACanvas,
-		TAPageBase
+		TAPageBase,
+		SNSPostWidget
 	},
 	data:() => ({
 		title: 'Mastodon/Misskey 投稿埋め込み ウィジェット',
@@ -70,14 +72,16 @@ export default {
 				newTab: true
 			}
 		],
-		post_url: '',
-		postData: undefined
+		pleaseWait: false,
+		urlInput: '',
+		uri: undefined
 	}),
 	methods: {
-		async getPost() {
-			const post = await new SNSPost(this.post_url).fetchPost();
-			this.postData = post?.postData;
-			this.post_url = post?.uri ?? this.post_url;
+		async preview() {
+			this.pleaseWait = true;
+			const post = await new SNSPost(this.urlInput).fetchPost();
+			this.uri = post?.uri ?? this.urlInput;
+			this.urlInput = post?.uri ?? this.urlInput;
 		}
 	}
 }
@@ -86,26 +90,16 @@ export default {
 <template>
 	<TAPageBase :title="title" :menu="menu" :buttons="buttons">
 		<TACanvas :title="title" icon="mdi-account-multiple" caption="分散SNSの投稿をブログやサイトに掲載" class="mb-3">
-			<v-text-field label="投稿のURLを入力" v-model="post_url" color="primary" variant="outlined" class="pt-3" clearable/>
+			<v-text-field label="投稿のURLを入力" v-model="urlInput" color="primary" variant="outlined" class="pt-3" clearable/>
 			<div class="d-flex flex-row ga-3 my-2">
-				<v-btn variant="tonal" color="primary" @click.stop="getPost()">ノートを取得</v-btn>
+				<v-btn variant="tonal" prepend-icon="mdi-eye-arrow-right" color="primary" @click.stop="preview()">プレビューを表示</v-btn>
 			</div>
-			<template v-if="postData != undefined">
-				<h2 v-if="postData.userDisplayName != undefined">{{ postData.userDisplayName }}</h2>
-				<p v-if="postData.userName != undefined">{{ postData.userName + '@' + postData.server }}</p>
-				<p v-if="postData.userImg != undefined">
-					<img :src="postData.userImg" class="rounded" style="width: 250px;" />
-				</p>
-				<div v-if="postData.htmlOutput" v-html="postData.text" />
-				<p v-else-if="postData.text.length > 0">
-					<template v-for="(line, index) in postData.text" :key="index">
-						{{ line }}<br>
-					</template>
-				</p>
-			</template>
+		</TACanvas>
+		<TACanvas title="プレビュー" icon="mdi-monitor" headerLevel=2 class="mb-3">
+			<v-alert v-if="pleaseWait" v-model="alert" border="start" variant="tonal" type="info" title="しばらくお待ちください" class="my-5" />
+			<SNSPostWidget class="mx-n5" :uri="uri" :key="uri" v-if="uri != undefined" @loadComplete="pleaseWait = false" />
 		</TACanvas>
 		<TACanvas title="更新履歴" icon="mdi-history" headerLevel=2 class="mb-3">
-			
 		</TACanvas>
 	</TAPageBase>
 </template>
