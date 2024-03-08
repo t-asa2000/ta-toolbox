@@ -18,6 +18,8 @@ export default class SNSPost {
 		this.redirect = redirect; // リダイレクト(リモート投稿の直接取得)
 
 		this.text = undefined; // 本文(HTMLもしくは1行ごとに分割された文字列の配列)
+		this.date = undefined; // 投稿日時
+
 		this.userName = undefined; // ユーザー名
 		this.userDisplayName = undefined; // ユーザー表示名
 		this.userUri = undefined; // ユーザーのURL
@@ -32,6 +34,7 @@ export default class SNSPost {
 			postId: this.postId,
 			htmlOutput: this.htmlOutput,
 			text: this.text,
+			date: this.date,
 			userName: this.userName,
 			userDisplayName: this.userDisplayName,
 			userUri: this.userUri,
@@ -74,7 +77,7 @@ export default class SNSPost {
 		});
 		const resp = await api.json();
 
-		//console.log(resp);
+		console.log(resp);
 
 		// 投稿の本文を取得 (MastodonのAPIはHTML形式で投稿の本文を返す)
 		this.text = resp?.content;
@@ -82,6 +85,7 @@ export default class SNSPost {
 		// 投稿の詳細を取得
 		this.postId = resp?.id ?? this.postId;
 		this.uri = resp?.uri ?? 'https://' + this.server + '/web/statuses/' + this.postId;
+		this.date = resp?.created_at != undefined ? new Date(resp.created_at).toLocaleString() : undefined;
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.account?.username;
@@ -116,7 +120,7 @@ export default class SNSPost {
 			resp = resp.renote;
 		}
 
-		//console.log(resp);
+		console.log(resp);
 
 		// 投稿の本文を取得 (1行ごとに分割)
 		this.text = resp?.text?.split('\n');
@@ -124,6 +128,7 @@ export default class SNSPost {
 		// 投稿の詳細を取得
 		this.postId = resp?.id ?? this.postId;
 		this.uri = resp?.uri ?? 'https://' + this.server + '/notes/' + this.postId;
+		this.date = resp?.createdAt != undefined ? new Date(resp.createdAt).toLocaleString() : undefined;
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.user?.username;

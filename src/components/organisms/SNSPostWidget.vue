@@ -26,18 +26,18 @@
 	<v-card class="sns-post-widget pa-2 elevation-0">
 		<template v-if="postData != undefined">
 			<v-card-actions>
-				<v-list-item style="overflow: unset;" class="w-100">
+				<v-list-item style="overflow: unset;" class="w-100 py-2 rounded" :href="postData.userUri" target="_blank" rel="noopener noreferrer">
 					<template v-slot:prepend>
-						<v-avatar :image="postData.userImg" />
+						<v-avatar :image="postData.userImg" size="large" class="mt-1" />
 					</template>
 					
 					<v-list-item-title style="white-space:unset" class="font-weight-bold">{{ postData.userDisplayName }}</v-list-item-title>
 					
-					<v-list-item-subtitle style="white-space:unset;min-height: 1.2em">{{ postData.userName + '@' + postData.server }}</v-list-item-subtitle>
+					<v-list-item-subtitle style="white-space:unset;min-height: 1.2em;font-size: 0.7rem;">{{ postData.userName + '@' + postData.server }}</v-list-item-subtitle>
 					
-					<!--v-list-item-subtitle style="white-space:unset;min-height: 1.2em" class="pt-1"
+					<v-list-item-subtitle style="white-space:unset;min-height: 1.2em;font-size: 0.7rem;"
 					>{{ postData.date }}</v-list-item-subtitle
-					-->
+					>
 				</v-list-item>
 			</v-card-actions>
 			
