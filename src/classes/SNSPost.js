@@ -196,7 +196,9 @@ export default class SNSPost {
 		if (text == undefined) return undefined;
 
 		// 絵文字の取得
-		const emojis = text.match(/\:[0-9a-zA-Z\-\_]+\:/g)?.map(x => x.replace(/\:/g, '')) ?? [];
+		const emojis = text.match(/\:[0-9a-zA-Z\-\_]+\:/g)
+			?.map(x => x.replace(/\:/g, ''))
+			.filter((x, i, self) => self.indexOf(x) === i) ?? [];
 
 		// 各絵文字に対応したHTMLソースコードへの置換
 		for(var i = 0; i < emojis.length ; i++) {
