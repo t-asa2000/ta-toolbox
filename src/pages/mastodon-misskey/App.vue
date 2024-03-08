@@ -77,9 +77,11 @@ export default {
 	}),
 	methods: {
 		async preview() {
-			const post = await new SNSPost(this.urlInput, false).fetchPost();
-			this.uri = post?.uri ?? this.urlInput;
-			this.urlInput = post?.uri ?? this.urlInput;
+			if (this.urlInput ?? '' != '') {
+				const post = await new SNSPost(this.urlInput, false).fetchPost();
+				this.uri = post?.uri ?? this.urlInput;
+				this.urlInput = post?.uri ?? this.urlInput;
+			}
 		}
 	}
 }

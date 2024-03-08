@@ -14,10 +14,9 @@ export default class SNSPost {
 		this.server = uri.server; // サーバーのドメイン
 		this.postId = uri.postId; // 投稿ID
 		this.service = uri.service; // SNSサービス名(Mastodon/Misskey)
-		this.htmlOutput = this.service == MASTODON; // HTML出力モード
 		this.redirect = redirect; // リダイレクト(リモート投稿の直接取得)
 
-		this.text = undefined; // 本文(HTMLもしくは1行ごとに分割された文字列の配列)
+		this.text = undefined; // 本文(1行ごとに分割されたHTMLの配列)
 		this.date = undefined; // 投稿日時
 
 		this.userName = undefined; // ユーザー名
@@ -32,7 +31,6 @@ export default class SNSPost {
 			uri: this.uri,
 			server: this.server,
 			postId: this.postId,
-			htmlOutput: this.htmlOutput,
 			text: this.text,
 			date: this.date,
 			userName: this.userName,
@@ -80,7 +78,7 @@ export default class SNSPost {
 		console.log(resp);
 
 		// 投稿の本文を取得 (MastodonのAPIはHTML形式で投稿の本文を返す)
-		this.text = this.parseMastodonEmojis(resp?.content, resp?.emojis);
+		this.text = [this.parseMastodonEmojis(resp?.content, resp?.emojis)];
 
 		// 投稿の詳細を取得
 		this.postId = resp?.id ?? this.postId;
@@ -150,6 +148,12 @@ export default class SNSPost {
 
 		// 投稿の本文を取得 (1行ごとに分割)
 		this.text = resp?.text?.split('\n');
+		if (this.text != undefined) {
+			// 1行ずつ絵文字をパースする
+			for (var i = 0; i < this.text.length; i++) {
+				this.text[i] = await this.parseMisskeyEmojis(this.text[i]);
+			}
+		}
 
 		// 投稿の詳細を取得
 		this.postId = resp?.id ?? this.postId;
@@ -158,11 +162,49 @@ export default class SNSPost {
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.user?.username;
-		this.userDisplayName = resp?.user?.name;
+		this.userDisplayName = await this.parseMisskeyEmojis(resp?.user?.name);
 		this.userImg = resp?.user?.avatarUrl;
 
 		if (this.userName != undefined) {
 			this.userUri = 'https://' + this.server + '/@' + this.userName;
 		}
+	}
+
+	// Misskeyの絵文字Urlを取得する
+	async getMisskeyEmojiUrl(name) {
+		// APIエンドポイント
+		const endpoint = 'https://' + this.server + '/api/emoji';
+		// APIパラメータ
+		const param = { name : name };
+		
+		// APIから絵文字情報を取得
+		const api = await fetch(endpoint, {
+			method : 'POST',
+			body : JSON.stringify(param),
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		});
+		var resp = await api.json();
+
+		// URLを返す
+		return resp?.url;
+	}
+
+	// Misskeyの絵文字をパースする
+	async parseMisskeyEmojis(text) {
+		if (text == undefined) return undefined;
+
+		// 絵文字の取得
+		const emojis = text.match(/\:[0-9a-zA-Z\-\_]+\:/g)?.map(x => x.replace(/\:/g, '')) ?? [];
+
+		// 各絵文字に対応したHTMLソースコードへの置換
+		for(var i = 0; i < emojis.length ; i++) {
+			const url = await this.getMisskeyEmojiUrl(emojis[i]);
+			const html = this.createImg(':' + emojis[i] + ':', url).outerHTML;
+			text = text.split(':' + emojis[i] + ':').join(html);
+		}
+		
+		return text;
 	}
 }

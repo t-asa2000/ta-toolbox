@@ -31,9 +31,7 @@
 						<v-avatar :image="postData.userImg" size="large" class="mt-1" />
 					</template>
 					
-					<v-list-item-title style="white-space:unset" class="font-weight-bold" v-if="postData.htmlOutput" v-html="postData.userDisplayName" />
-
-					<v-list-item-title style="white-space:unset" class="font-weight-bold" v-else>{{ postData.userDisplayName }}</v-list-item-title>
+					<v-list-item-title style="white-space:unset" class="font-weight-bold" v-html="postData.userDisplayName" />
 					
 					<v-list-item-subtitle style="white-space:unset;min-height: 1.2em;font-size: 0.7rem;">{{ postData.userName + '@' + postData.server }}</v-list-item-subtitle>
 					
@@ -43,12 +41,10 @@
 				</v-list-item>
 			</v-card-actions>
 			
-			<v-card-text style="font-size: 1.2em; line-height: 1.2" class="py-2" v-if="postData.htmlOutput" v-html="postData.text" />
+			<v-card-text style="font-size: 1.2em; line-height: 1.2" class="py-2" v-if="postData.text.length == 1" v-html="postData.text[0]" />
 			
 			<v-card-text style="font-size: 1.2em; line-height: 1.2" class="py-2" v-else>
-				<template v-for="(line, index) in postData.text" :key="index">
-					{{ line }}<br>
-				</template>
+				<p v-for="(line, index) in postData.text" :key="index" v-html="line" />
 			</v-card-text>
 
 			<v-card-actions class="pt-3">
