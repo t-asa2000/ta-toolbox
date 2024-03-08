@@ -54,7 +54,7 @@
 			</v-card-actions>
 		</template>
 
-		<v-card-text style="line-height: 1.2" class="text-h5 py-2" v-else>
+		<v-card-text style="font-size: 1.2em; line-height: 1.2" class="py-2" v-else>
 			{{ pleaseWait ? 'しばらくお待ちください。' : '投稿を取得できません。' }}
 		</v-card-text>
 
