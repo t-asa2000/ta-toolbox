@@ -1,4 +1,5 @@
 import SNSPostUri from "./SNSPostUri";
+import escapeHtml from "@/scripts/escapeHtml";
 
 const MASTODON = 'mastodon';
 const MISSKEY = 'misskey';
@@ -87,7 +88,8 @@ export default class SNSPost {
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.account?.username;
-		this.userDisplayName = this.parseMastodonEmojis(resp?.account?.display_name, resp?.account?.emojis);
+		this.userDisplayName = escapeHtml(resp?.account?.display_name);
+		this.userDisplayName = this.parseMastodonEmojis(this.userDisplayName, resp?.account?.emojis);
 		this.userImg = resp?.account?.avatar_static;
 
 		if (this.userName != undefined) {
@@ -151,6 +153,7 @@ export default class SNSPost {
 		if (this.text != undefined) {
 			// 1行ずつ絵文字をパースする
 			for (var i = 0; i < this.text.length; i++) {
+				this.text[i] = escapeHtml(this.text[i]);
 				this.text[i] = await this.parseMisskeyEmojis(this.text[i]);
 			}
 		}
@@ -162,7 +165,8 @@ export default class SNSPost {
 
 		// ユーザーの詳細を取得
 		this.userName = resp?.user?.username;
-		this.userDisplayName = await this.parseMisskeyEmojis(resp?.user?.name);
+		this.userDisplayName = escapeHtml(resp?.user?.name);
+		this.userDisplayName = await this.parseMisskeyEmojis(this.userDisplayName);
 		this.userImg = resp?.user?.avatarUrl;
 
 		if (this.userName != undefined) {
